@@ -641,7 +641,7 @@ function Waitlist() {
     >
       <div className="mx-auto grid max-w-[1400px] grid-cols-12 gap-6 px-6 py-28 md:py-40">
         <div className="col-span-12 md:col-span-6">
-          <Eyebrow id="manifesto">06 — Manifesto</Eyebrow>
+          <div id="manifesto"><Eyebrow>06 — Manifesto</Eyebrow></div>
           <h2 className="mt-6 display-xl text-[clamp(2.5rem,6vw,5.5rem)]">
             Join the generation that believes
             <br />
