@@ -11,8 +11,10 @@ import {
   Plus,
 } from "lucide-react";
 
-import lvlMark from "@/assets/lvl1-mark.png";
+import lvlLogo from "@/assets/lvl1-logo.png.asset.json";
 import chromeSculpture from "@/assets/chrome-sculpture.png";
+
+const lvlMark = lvlLogo.url;
 
 export const Route = createFileRoute("/")({
   component: Landing,
