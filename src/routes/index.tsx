@@ -956,7 +956,7 @@ function Offer() {
               </div>
               <a
                 href="#waitlist"
-                className="group mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-background px-6 py-4 text-base font-medium text-foreground transition-transform hover:-translate-y-0.5"
+                className="group mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-background px-6 py-4 text-base font-medium font-cta text-foreground transition-transform hover:-translate-y-0.5"
               >
                 Start Your Upgrade
                 <ArrowUpRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
