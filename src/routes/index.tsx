@@ -9,49 +9,22 @@ import {
   Lock,
   Check,
   Plus,
+  X,
 } from "lucide-react";
 
 import lvlLogo from "@/assets/lvl1-logo.png.asset.json";
 import lvlArc from "@/assets/lvl1-arc.png";
+import metal1 from "@/assets/metal-piece-1.png";
+import metal2 from "@/assets/metal-piece-2.png";
+import metal3 from "@/assets/metal-piece-3.png";
 
 const lvlMark = lvlArc;
-const chromeSculpture = lvlArc;
 
 export const Route = createFileRoute("/")({
   component: Landing,
 });
 
 /* ----------------------------- small primitives ---------------------------- */
-
-function Foil({
-  variant = "silver",
-  className = "",
-}: {
-  variant?: "silver" | "gold" | "purple";
-  className?: string;
-}) {
-  const cls =
-    variant === "gold" ? "foil-gold" : variant === "purple" ? "foil-purple" : "foil-silver";
-  return <div className={`${cls} ${className}`} aria-hidden />;
-}
-
-function FoilText({
-  children,
-  variant = "silver",
-  className = "",
-}: {
-  children: React.ReactNode;
-  variant?: "silver" | "gold" | "purple";
-  className?: string;
-}) {
-  const cls =
-    variant === "gold"
-      ? "foil-text-gold"
-      : variant === "purple"
-        ? "foil-text-purple"
-        : "foil-text-silver";
-  return <span className={`${cls} ${className}`}>{children}</span>;
-}
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return <div className="eyebrow">{children}</div>;
@@ -66,6 +39,29 @@ function Mark({ className = "" }: { className?: string }) {
       height={64}
       className={`select-none ${className}`}
       draggable={false}
+    />
+  );
+}
+
+function MetalPiece({
+  src,
+  className = "",
+  alt = "",
+}: {
+  src: string;
+  className?: string;
+  alt?: string;
+}) {
+  return (
+    <img
+      src={src}
+      alt={alt}
+      aria-hidden={!alt}
+      loading="lazy"
+      width={1024}
+      height={1024}
+      draggable={false}
+      className={`pointer-events-none select-none ${className}`}
     />
   );
 }
@@ -88,10 +84,10 @@ function Header() {
         </a>
         <nav className="hidden items-center gap-8 md:flex">
           {[
-            ["Philosophy", "#philosophy"],
-            ["System", "#system"],
-            ["Course", "#course"],
-            ["Manifesto", "#manifesto"],
+            ["The System", "#system"],
+            ["Curriculum", "#course"],
+            ["Results", "#results"],
+            ["FAQ", "#faq"],
           ].map(([label, href]) => (
             <a
               key={href}
@@ -103,10 +99,10 @@ function Header() {
           ))}
         </nav>
         <a
-          href="#waitlist"
+          href="#offer"
           className="group inline-flex items-center gap-2 rounded-full bg-foreground px-4 py-2 text-sm font-medium text-background transition-transform hover:-translate-y-0.5"
         >
-          Join waitlist
+          Join Now
           <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </a>
       </div>
@@ -116,11 +112,11 @@ function Header() {
 
 function Marquee() {
   const items = [
-    "EVERYTHING'S A STEP AHEAD",
-    "TURN PROCRASTINATION BORING",
-    "I AM SPEED",
-    "START AT LEVEL 1",
+    "STOP HOPING. ENGINEER IT.",
+    "EXECUTION OVER MOTIVATION",
+    "TURN GOALS INTO QUESTS",
     "LEVEL UP FASTER",
+    "TOP 1% PRODUCTIVITY",
   ];
   return (
     <div className="relative overflow-hidden border-y border-border bg-foreground py-4 text-background">
@@ -141,18 +137,14 @@ function Marquee() {
 function Hero() {
   return (
     <section id="top" className="relative overflow-hidden">
-      {/* floating chrome sculptures */}
-      <img
-        src={chromeSculpture}
-        alt=""
-        aria-hidden
-        className="pointer-events-none absolute -left-24 top-40 w-72 opacity-90 animate-float-slower"
+      {/* static crumpled metal pieces */}
+      <MetalPiece
+        src={metal1}
+        className="absolute -left-24 top-32 w-80 opacity-90 -rotate-12"
       />
-      <img
-        src={chromeSculpture}
-        alt=""
-        aria-hidden
-        className="pointer-events-none absolute -right-16 bottom-24 w-56 rotate-45 opacity-80 animate-float-slow"
+      <MetalPiece
+        src={metal3}
+        className="absolute -right-20 bottom-10 w-64 opacity-80 rotate-6"
       />
 
       <div className="relative mx-auto max-w-[1400px] px-6 pt-20 pb-28 md:pt-28 md:pb-40">
@@ -162,38 +154,48 @@ function Hero() {
             <div className="hidden items-center gap-2 md:flex">
               <span className="h-2 w-2 rounded-full bg-accent animate-pulse" />
               <span className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
-                Waitlist open
+                Enrollment open
               </span>
             </div>
           </div>
 
-          <h1 className="col-span-12 mt-8 display-xl text-[clamp(3.5rem,12vw,12rem)]">
-            Everyone starts
+          <h1 className="col-span-12 mt-8 display-xl text-[clamp(3rem,9vw,9rem)]">
+            Stop hoping you'll become productive.
             <br />
-            at <FoilText variant="purple">Level&nbsp;1.</FoilText>
+            <span className="text-accent">Engineer it.</span>
           </h1>
 
           <div className="col-span-12 mt-10 flex flex-col gap-10 md:col-span-7 md:mt-14">
             <p className="text-xl leading-tight text-foreground/80 md:text-2xl">
-              The difference is how fast you level up. LVL&nbsp;1 is a premium execution
-              system that turns overwhelming goals into quest lines — so you stop planning
-              your life and start speed-running it.
+              The Top 1% Productivity System helps ambitious founders, creators and
+              professionals build an execution system that makes progress inevitable.
+              No motivation. No hustle culture. No productivity hacks — just a complete
+              operating system that turns any goal into executable quests.
             </p>
             <div className="flex flex-wrap items-center gap-4">
               <a
-                href="#waitlist"
+                href="#offer"
                 className="group inline-flex items-center gap-3 rounded-full bg-foreground px-7 py-4 text-base font-medium text-background transition-transform hover:-translate-y-0.5"
               >
-                Claim Level 1
+                Start Your Upgrade
                 <ArrowUpRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </a>
               <a
                 href="#system"
                 className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-4 text-base font-medium text-foreground transition-colors hover:bg-secondary"
               >
-                See the system
+                See The System
               </a>
             </div>
+            <ul className="flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs uppercase tracking-widest text-muted-foreground">
+              {["Lifetime Updates", "Practical Templates", "AI Workflows", "14-Day Guarantee"].map(
+                (t) => (
+                  <li key={t} className="flex items-center gap-2">
+                    <Check className="h-3 w-3 text-accent" /> {t}
+                  </li>
+                ),
+              )}
+            </ul>
           </div>
 
           <div className="col-span-12 mt-10 md:col-span-5 md:mt-14">
@@ -206,6 +208,13 @@ function Hero() {
 }
 
 function XPCard() {
+  const stages = [
+    { label: "Goal", lvl: 0 },
+    { label: "Questline", lvl: 1 },
+    { label: "Level 12", lvl: 12 },
+    { label: "Level 46", lvl: 46 },
+    { label: "Level 99", lvl: 99 },
+  ];
   const [xp, setXp] = useState(120);
   useEffect(() => {
     const id = setInterval(() => setXp((v) => (v >= 940 ? 120 : v + 7)), 90);
@@ -219,7 +228,7 @@ function XPCard() {
           <Mark className="h-9 w-9" />
           <div>
             <div className="eyebrow">Player · you</div>
-            <div className="font-display text-lg font-semibold">Level 1 → 2</div>
+            <div className="font-display text-lg font-semibold">Goal → Level 99</div>
           </div>
         </div>
         <div className="rounded-full border border-border px-3 py-1 font-mono text-xs">
@@ -228,50 +237,116 @@ function XPCard() {
       </div>
       <div className="relative mt-6 h-3 overflow-hidden rounded-full bg-secondary">
         <div
-          className="foil-purple h-full rounded-full transition-[width] duration-200 ease-out"
+          className="h-full rounded-full bg-accent transition-[width] duration-200 ease-out"
           style={{ width: `${pct}%` }}
         />
       </div>
-      <div className="mt-6 grid grid-cols-3 gap-3 text-center">
-        {[
-          { l: "Quests", v: "3" },
-          { l: "Streak", v: "12d" },
-          { l: "Focus", v: "94%" },
-        ].map((s) => (
-          <div key={s.l} className="rounded-xl border border-border bg-background/60 p-3">
-            <div className="font-display text-xl font-bold">{s.v}</div>
-            <div className="eyebrow mt-1">{s.l}</div>
-          </div>
-        ))}
-      </div>
+      <ol className="mt-6 space-y-2">
+        {stages.map((s, i) => {
+          const reached = pct >= (i / (stages.length - 1)) * 100;
+          return (
+            <li
+              key={s.label}
+              className="flex items-center justify-between rounded-xl border border-border bg-background/60 px-3 py-2 text-sm"
+            >
+              <span className="flex items-center gap-2 font-medium">
+                <span
+                  className={`inline-block h-2 w-2 rounded-full ${reached ? "bg-accent" : "bg-border"}`}
+                />
+                {s.label}
+              </span>
+              <span className="font-mono text-xs text-muted-foreground">
+                LVL {s.lvl.toString().padStart(2, "0")}
+              </span>
+            </li>
+          );
+        })}
+      </ol>
     </div>
   );
 }
 
-/* -------------------------------- philosophy ------------------------------- */
+/* -------------------------------- trust strip ------------------------------- */
 
-function Philosophy() {
+function TrustStrip() {
+  const pills = ["First Principles", "Systems Thinking", "MECE", "AI", "Behavioral Design"];
   return (
-    <section id="philosophy" className="relative border-t border-border">
-      <div className="mx-auto max-w-[1400px] px-6 py-28 md:py-40">
+    <section className="relative border-t border-border bg-secondary/40">
+      <div className="mx-auto max-w-[1400px] px-6 py-16 md:py-20">
+        <div className="grid grid-cols-12 gap-6 items-center">
+          <h3 className="col-span-12 font-display text-2xl leading-tight md:col-span-6 md:text-3xl">
+            Most productivity advice teaches motivation.
+            <br />
+            <span className="text-accent">We teach execution.</span>
+          </h3>
+          <div className="col-span-12 md:col-span-6">
+            <div className="mb-4 eyebrow">Built on</div>
+            <div className="flex flex-wrap gap-2">
+              {pills.map((p) => (
+                <span
+                  key={p}
+                  className="rounded-full border border-border bg-background px-4 py-2 text-sm font-medium"
+                >
+                  {p}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* -------------------------------- problem ------------------------------- */
+
+function Problem() {
+  const collected = [
+    "Bookmarks",
+    "Courses",
+    "YouTube videos",
+    "Notes",
+    "Notion templates",
+    "Advice",
+    "Ideas",
+  ];
+  return (
+    <section id="problem" className="relative border-t border-border overflow-hidden">
+      <MetalPiece
+        src={metal2}
+        className="absolute -right-32 top-20 w-96 opacity-70 rotate-12"
+      />
+      <div className="relative mx-auto max-w-[1400px] px-6 py-28 md:py-40">
         <div className="grid grid-cols-12 gap-6">
           <div className="col-span-12 md:col-span-4">
             <Eyebrow>01 — The Problem</Eyebrow>
           </div>
           <h2 className="col-span-12 display-xl text-[clamp(2.5rem,7vw,6rem)] md:col-span-8">
-            You're comparing your <FoilText variant="silver">Level&nbsp;1</FoilText>
+            You don't have a productivity problem.
             <br />
-            to someone else's <FoilText variant="gold">Level&nbsp;99.</FoilText>
+            You have an <span className="text-accent">execution problem.</span>
           </h2>
           <div className="col-span-12 md:col-span-4" />
           <div className="col-span-12 mt-10 space-y-6 text-lg leading-relaxed text-foreground/80 md:col-span-8 md:text-xl">
             <p>
-              The overwhelm isn't real. It's a rendering bug. You loaded into the game,
-              looked around, and saw everyone else with maxed-out gear. Nobody told you
-              they started here too.
+              Every ambitious person eventually hits the same wall. Not because they aren't
+              capable — because their brain becomes overloaded.
             </p>
-            <p className="text-foreground">
-              You're not behind. You're just Level&nbsp;1.
+            <p>You collect:</p>
+            <ul className="grid grid-cols-2 gap-x-8 gap-y-2 font-display text-xl text-foreground md:grid-cols-3 md:text-2xl">
+              {collected.map((c) => (
+                <li key={c} className="border-b border-border pb-2">
+                  {c}.
+                </li>
+              ))}
+            </ul>
+            <p className="text-foreground">Yet your goals barely move.</p>
+            <p>
+              Eventually you start believing{" "}
+              <span className="italic text-foreground">"I'm just inconsistent."</span>
+            </p>
+            <p className="font-display text-2xl text-foreground md:text-3xl">
+              You're not. You're comparing your Level 1 to someone else's Level 99.
             </p>
           </div>
         </div>
@@ -280,83 +355,175 @@ function Philosophy() {
   );
 }
 
-/* --------------------------------- system --------------------------------- */
+/* -------------------------------- operating system ------------------------- */
+
+function OS() {
+  const swaps = [
+    ["Instead of forcing discipline", "we redesign the environment where discipline happens."],
+    ["Instead of adding more tasks", "we reduce friction until action becomes obvious."],
+    ["Instead of hoping you stay motivated", "we engineer momentum."],
+  ];
+  return (
+    <section className="relative border-t border-border bg-foreground text-background overflow-hidden">
+      <MetalPiece
+        src={metal1}
+        className="absolute -left-24 -top-16 w-80 opacity-60 -rotate-12"
+      />
+      <div className="relative mx-auto max-w-[1400px] px-6 py-28 md:py-40">
+        <div className="grid grid-cols-12 gap-6">
+          <div className="col-span-12 md:col-span-4">
+            <div className="eyebrow text-background/60">02 — The New OS</div>
+          </div>
+          <h2 className="col-span-12 display-xl text-[clamp(2.5rem,7vw,6rem)] md:col-span-8">
+            Meet your new operating system.
+            <br />
+            <span className="text-accent">The Top 1% Productivity System.</span>
+          </h2>
+        </div>
+        <div className="mt-16 grid gap-6 md:grid-cols-3">
+          {swaps.map(([a, b]) => (
+            <div
+              key={a}
+              className="rounded-3xl border border-background/20 bg-background/5 p-8"
+            >
+              <div className="font-mono text-xs uppercase tracking-widest text-background/60">
+                {a}
+              </div>
+              <div className="mt-4 font-display text-2xl leading-tight">{b}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* --------------------------------- framework --------------------------------- */
 
 function System() {
   const pillars = [
     {
+      n: "①",
       icon: Zap,
       label: "Input",
-      desc: "Curate what enters your mind. Signal over slop.",
-      foil: "purple" as const,
+      tagline: "Control what enters your brain.",
+      body:
+        "Instead of consuming everything, capture only what matters.",
+      list: [
+        "Second Brain",
+        "Information Filtering",
+        "AI Capture",
+        "Knowledge Compression",
+        "Decision Frameworks",
+      ],
+      result: "Your brain becomes clear.",
     },
     {
+      n: "②",
       icon: Cpu,
       label: "Process",
-      desc: "Turn thoughts into repeatable rituals that compound.",
-      foil: "silver" as const,
+      tagline: "Turn goals into executable quests.",
+      body:
+        "The heart of Lvl 1. Every goal becomes Quest → Levels → Tasks → Micro actions → Calendar → Completion → XP → Next level.",
+      list: [
+        "Quest architecture",
+        "Level design",
+        "Micro-actions",
+        "Calendar loops",
+        "XP tracking",
+      ],
+      result: 'Only "Complete today\'s quest."',
     },
     {
+      n: "③",
       icon: Target,
       label: "Output",
-      desc: "Ship visible reps. Progress beats perfection, always.",
-      foil: "gold" as const,
+      tagline: "Become impossible to outwork.",
+      body: "Instead of working longer, you'll create more per hour.",
+      list: [
+        "Deep Work",
+        "AI leverage",
+        "Automation",
+        "Execution systems",
+        "Decision speed",
+        "Content systems",
+        "Business systems",
+        "Leverage loops",
+      ],
+      result: "Compounding output.",
     },
     {
+      n: "④",
       icon: Compass,
       label: "Environment",
-      desc: "Design a world where the right move is the easy move.",
-      foil: "silver" as const,
+      tagline: "Engineer a world that makes success easier.",
+      body: "Because environment beats willpower. Every time.",
+      list: [
+        "Digital Workspace",
+        "Notifications",
+        "Phone",
+        "Calendar",
+        "Physical Workspace",
+        "People",
+        "Habit Loops",
+        "Default Choices",
+      ],
+      result: "Effortless action.",
     },
   ];
   return (
-    <section id="system" className="relative border-t border-border bg-secondary/40">
+    <section id="system" className="relative border-t border-border">
       <div className="mx-auto max-w-[1400px] px-6 py-28 md:py-40">
         <div className="grid grid-cols-12 gap-6">
           <div className="col-span-12 md:col-span-5">
-            <Eyebrow>02 — The Framework</Eyebrow>
+            <Eyebrow>03 — The Framework</Eyebrow>
             <h2 className="mt-6 display-xl text-[clamp(2.25rem,5vw,4.5rem)]">
-              Four pillars.
+              The Top 1%
               <br />
-              One <FoilText variant="purple">execution engine.</FoilText>
+              <span className="text-accent">Productivity Framework.</span>
             </h2>
           </div>
           <p className="col-span-12 self-end text-lg text-foreground/80 md:col-span-6 md:col-start-7">
-            LVL&nbsp;1 isn't hacks. It's the physics of getting things done — broken into
-            four systems that plug into each other and quietly compound.
+            Every productive person eventually masters four systems. Most people only
+            optimize one. LVL 1 makes all four click together.
           </p>
         </div>
 
-        <div className="mt-16 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {pillars.map((p, i) => (
+        <div className="mt-16 grid grid-cols-1 gap-4 md:grid-cols-2">
+          {pillars.map((p) => (
             <div
               key={p.label}
-              className="group relative overflow-hidden rounded-3xl border border-border bg-background p-7 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_30px_80px_-40px_rgba(0,0,0,0.4)]"
+              className="group relative overflow-hidden rounded-3xl border border-border bg-background p-8 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_30px_80px_-40px_rgba(0,0,0,0.4)]"
             >
               <div className="flex items-start justify-between">
-                <div className="relative h-14 w-14 overflow-hidden rounded-2xl">
-                  <Foil variant={p.foil} className="absolute inset-0" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <p.icon
-                      className="h-6 w-6 text-background mix-blend-difference"
-                      strokeWidth={2.25}
-                    />
-                  </div>
+                <div className="flex items-center gap-3">
+                  <span className="font-display text-4xl font-bold text-accent">
+                    {p.n}
+                  </span>
+                  <p.icon className="h-6 w-6" strokeWidth={2.25} />
                 </div>
-                <span className="font-mono text-xs text-muted-foreground">
-                  0{i + 1}
-                </span>
+                <span className="font-mono text-xs text-muted-foreground">Pillar</span>
               </div>
-              <div className="mt-10 font-display text-3xl font-bold tracking-tight">
+              <div className="mt-8 font-display text-4xl font-bold tracking-tight">
                 {p.label}
               </div>
-              <p className="mt-3 text-sm text-foreground/70">{p.desc}</p>
-              <div className="mt-8 h-px w-full bg-border" />
-              <div className="mt-4 flex items-center justify-between text-xs">
+              <p className="mt-2 font-display text-lg text-foreground/80">{p.tagline}</p>
+              <p className="mt-4 text-sm text-foreground/70">{p.body}</p>
+              <div className="mt-6 flex flex-wrap gap-2">
+                {p.list.map((l) => (
+                  <span
+                    key={l}
+                    className="rounded-full border border-border bg-secondary/60 px-3 py-1 text-xs"
+                  >
+                    {l}
+                  </span>
+                ))}
+              </div>
+              <div className="mt-6 flex items-center justify-between border-t border-border pt-4 text-sm">
                 <span className="font-mono uppercase tracking-widest text-muted-foreground">
-                  Pillar
+                  Result
                 </span>
-                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                <span className="font-display font-semibold">{p.result}</span>
               </div>
             </div>
           ))}
@@ -366,129 +533,68 @@ function System() {
   );
 }
 
-/* ---------------------------- quests transformation ---------------------------- */
-
-function Quests() {
-  return (
-    <section className="relative border-t border-border">
-      <div className="mx-auto max-w-[1400px] px-6 py-28 md:py-40">
-        <div className="grid grid-cols-12 gap-6">
-          <div className="col-span-12 md:col-span-5">
-            <Eyebrow>03 — Goals become quests</Eyebrow>
-            <h2 className="mt-6 display-xl text-[clamp(2.25rem,5vw,4.5rem)]">
-              Delete the
-              <br />
-              <span className="line-through decoration-accent decoration-[6px]">
-                to-do list.
-              </span>
-            </h2>
-            <p className="mt-8 max-w-md text-lg text-foreground/80">
-              Endless lists paralyze. Quest lines pull. LVL&nbsp;1 turns every goal into a
-              chain of small, executable moves — with levels, XP, and progress bars that
-              make procrastination feel boring.
-            </p>
-          </div>
-
-          <div className="col-span-12 md:col-span-7">
-            <div className="grid grid-cols-1 gap-3">
-              <BeforeAfter
-                before="Get in shape"
-                after="Quest: Move for 20 min · +40 XP"
-                pct={65}
-              />
-              <BeforeAfter
-                before="Launch the product"
-                after="Quest: Ship landing v1 · +120 XP"
-                pct={82}
-                foil="gold"
-              />
-              <BeforeAfter
-                before="Read more books"
-                after="Quest: 10 pages before phone · +15 XP"
-                pct={40}
-                foil="silver"
-              />
-              <BeforeAfter
-                before="Fix my sleep"
-                after="Quest: Lights out 22:30 · +25 XP"
-                pct={28}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function BeforeAfter({
-  before,
-  after,
-  pct,
-  foil = "purple",
-}: {
-  before: string;
-  after: string;
-  pct: number;
-  foil?: "silver" | "gold" | "purple";
-}) {
-  return (
-    <div className="group grid grid-cols-12 items-center gap-4 rounded-2xl border border-border bg-card p-5 transition-colors hover:bg-secondary/50">
-      <div className="col-span-12 flex items-center gap-3 md:col-span-4">
-        <span className="rounded-full border border-border px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-          Before
-        </span>
-        <span className="text-foreground/60 line-through">{before}</span>
-      </div>
-      <div className="col-span-12 flex items-center gap-3 md:col-span-5">
-        <span className="rounded-full bg-foreground px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-background">
-          Quest
-        </span>
-        <span className="font-medium">{after}</span>
-      </div>
-      <div className="col-span-12 md:col-span-3">
-        <div className="relative h-2 overflow-hidden rounded-full bg-secondary">
-          <div
-            className={`h-full rounded-full ${foil === "gold" ? "foil-gold" : foil === "silver" ? "foil-silver" : "foil-purple"}`}
-            style={{ width: `${pct}%` }}
-          />
-        </div>
-        <div className="mt-1 flex justify-between font-mono text-[10px] text-muted-foreground">
-          <span>LVL {Math.ceil(pct / 20)}</span>
-          <span>{pct}%</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 /* --------------------------------- course --------------------------------- */
 
 function Course() {
   const modules = [
-    { n: "01", title: "The Level 1 Mindset", foil: "silver" as const, xp: 200 },
-    { n: "02", title: "Quest Design", foil: "purple" as const, xp: 320 },
-    { n: "03", title: "Execution Sprints", foil: "gold" as const, xp: 280 },
-    { n: "04", title: "Environment Architecture", foil: "silver" as const, xp: 240 },
-    { n: "05", title: "Input Diet", foil: "purple" as const, xp: 180 },
-    { n: "06", title: "The Speed Loop", foil: "gold" as const, xp: 420 },
+    {
+      n: "01",
+      title: "The Psychology of Top 1%",
+      body: "Identity. Beliefs. Execution. Speed. Why most ambitious people stay stuck.",
+    },
+    {
+      n: "02",
+      title: "The Input Engine",
+      body: "Second Brain. AI Capture. Knowledge. Reading. Thinking. Information Diet.",
+    },
+    {
+      n: "03",
+      title: "Questification",
+      body: "How to turn any goal into Levels 1–99. This becomes your personal game.",
+    },
+    {
+      n: "04",
+      title: "Execution Engine",
+      body: "Planning. Calendars. Priority. Deep Work. Focus. Decision Making. Anti-Procrastination.",
+    },
+    {
+      n: "05",
+      title: "Output Multiplication",
+      body: "AI. Automation. Leverage. Business Systems. Content Systems. Execution Systems.",
+    },
+    {
+      n: "06",
+      title: "Environment Design",
+      body: "Workspace. Phone. Notifications. Sleep. Energy. People. Defaults.",
+    },
+    {
+      n: "07",
+      title: "The Lifetime System",
+      body: "Health. Wealth. Relationships. Career. Learning. Every future goal follows the same framework.",
+    },
   ];
   return (
-    <section id="course" className="relative border-t border-border bg-foreground text-background">
-      <div className="mx-auto max-w-[1400px] px-6 py-28 md:py-40">
+    <section
+      id="course"
+      className="relative border-t border-border bg-foreground text-background overflow-hidden"
+    >
+      <MetalPiece
+        src={metal3}
+        className="absolute -right-16 top-20 w-72 opacity-60 rotate-6"
+      />
+      <div className="relative mx-auto max-w-[1400px] px-6 py-28 md:py-40">
         <div className="grid grid-cols-12 gap-6">
           <div className="col-span-12 md:col-span-5">
-            <div className="eyebrow text-background/60">04 — The Course</div>
+            <div className="eyebrow text-background/60">04 — Inside the Course</div>
             <h2 className="mt-6 display-xl text-[clamp(2.25rem,5vw,4.5rem)]">
-              Six modules.
+              Seven modules.
               <br />
-              <FoilText variant="gold">Collect them all.</FoilText>
+              <span className="text-accent">One complete system.</span>
             </h2>
           </div>
           <p className="col-span-12 self-end text-lg text-background/70 md:col-span-6 md:col-start-7">
-            Each module is a collectible card in the LVL&nbsp;1 deck — video lessons,
-            playbooks, and quest templates you actually run. Complete a card, unlock the
-            next.
+            Each module is a playable chapter — video lessons, playbooks and quest
+            templates you actually run. Finish one, unlock the next.
           </p>
         </div>
 
@@ -505,13 +611,11 @@ function Course() {
 function ModuleCard({
   n,
   title,
-  foil,
-  xp,
+  body,
 }: {
   n: string;
   title: string;
-  foil: "silver" | "gold" | "purple";
-  xp: number;
+  body: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
@@ -522,38 +626,27 @@ function ModuleCard({
         const r = ref.current!.getBoundingClientRect();
         const x = (e.clientX - r.left) / r.width - 0.5;
         const y = (e.clientY - r.top) / r.height - 0.5;
-        setTilt({ x: y * -8, y: x * 10 });
+        setTilt({ x: y * -6, y: x * 8 });
       }}
       onMouseLeave={() => setTilt({ x: 0, y: 0 })}
       style={{
         transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
       }}
-      className="group relative aspect-[3/4] overflow-hidden rounded-3xl border border-background/15 bg-background/5 p-6 transition-transform duration-200"
+      className="group relative overflow-hidden rounded-3xl border border-background/15 bg-background/5 p-7 transition-transform duration-200"
     >
-      <Foil
-        variant={foil}
-        className="absolute inset-0 opacity-70 transition-opacity duration-500 group-hover:opacity-90"
-      />
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-foreground/85" />
-      <div className="relative flex h-full flex-col justify-between text-background">
-        <div className="flex items-start justify-between">
-          <span className="font-mono text-sm tracking-widest text-background/90 mix-blend-difference">
-            MOD · {n}
-          </span>
-          <span className="rounded-full bg-background/90 px-2 py-0.5 font-mono text-[10px] tracking-widest text-foreground">
-            +{xp} XP
-          </span>
-        </div>
-        <div>
-          <Mark className="h-8 w-8 opacity-90" />
-          <h3 className="mt-4 font-display text-3xl font-bold leading-none tracking-tight">
-            {title}
-          </h3>
-          <div className="mt-6 flex items-center justify-between text-xs text-background/80">
-            <span className="font-mono uppercase tracking-widest">Collectible</span>
-            <ArrowUpRight className="h-5 w-5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-          </div>
-        </div>
+      <div className="flex items-start justify-between">
+        <span className="font-mono text-sm tracking-widest text-background/80">
+          MOD · {n}
+        </span>
+        <Mark className="h-6 w-6 opacity-80" />
+      </div>
+      <h3 className="mt-10 font-display text-2xl font-bold leading-tight tracking-tight">
+        {title}
+      </h3>
+      <p className="mt-3 text-sm text-background/70">{body}</p>
+      <div className="mt-8 flex items-center justify-between border-t border-background/15 pt-4 text-xs text-background/70">
+        <span className="font-mono uppercase tracking-widest">Chapter</span>
+        <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
       </div>
     </div>
   );
@@ -563,19 +656,28 @@ function ModuleCard({
 
 function Bonuses() {
   const items = [
-    { title: "Quest template vault", desc: "Plug-and-play playbooks for 40+ goals." },
-    { title: "Founders' community", desc: "Ship in public with the first cohort.", soon: true },
-    { title: "1:1 coaching upgrade", desc: "Book a strategist for boss-battle weeks.", soon: true },
-    { title: "Execution OS (beta)", desc: "The full app. Waitlist inside the course.", soon: true },
+    { title: "Top 1% Notion Dashboard", desc: "Your daily execution cockpit." },
+    { title: "AI Prompt Library", desc: "Copy-paste prompts for every workflow." },
+    { title: "Quest Builder Templates", desc: "Turn any goal into Levels 1–99." },
+    { title: "Goal Assessment Framework", desc: "Diagnose what to work on first." },
+    { title: "Weekly Planning System", desc: "The exact ritual we run every Sunday." },
+    { title: "Execution Checklists", desc: "Deep work, decision, environment audits." },
+    { title: "Lifetime Updates", desc: "Every future revision, free forever." },
+    { title: "Priority Calculator", desc: "Kill the noise. Do the one thing." },
+    { title: "Community Waitlist", desc: "Founding member pricing + future discount.", soon: true },
   ];
   return (
-    <section className="relative border-t border-border">
-      <div className="mx-auto max-w-[1400px] px-6 py-28 md:py-40">
+    <section className="relative border-t border-border overflow-hidden">
+      <MetalPiece
+        src={metal2}
+        className="absolute -left-20 top-10 w-72 opacity-60 -rotate-6"
+      />
+      <div className="relative mx-auto max-w-[1400px] px-6 py-28 md:py-40">
         <div className="grid grid-cols-12 gap-6">
           <div className="col-span-12 md:col-span-5">
-            <Eyebrow>05 — What's inside</Eyebrow>
+            <Eyebrow>05 — What's included</Eyebrow>
             <h2 className="mt-6 display-xl text-[clamp(2.25rem,5vw,4.5rem)]">
-              Bonus <FoilText variant="silver">loot.</FoilText>
+              Bonuses <span className="text-accent">included free.</span>
             </h2>
           </div>
         </div>
@@ -583,13 +685,13 @@ function Bonuses() {
           {items.map((it, i) => (
             <div
               key={it.title}
-              className="group grid grid-cols-12 items-center gap-4 py-8 transition-colors hover:bg-secondary/40"
+              className="group grid grid-cols-12 items-center gap-4 py-6 transition-colors hover:bg-secondary/40"
             >
               <div className="col-span-1 font-mono text-xs text-muted-foreground">
-                0{i + 1}
+                {(i + 1).toString().padStart(2, "0")}
               </div>
               <div className="col-span-11 md:col-span-6">
-                <h3 className="font-display text-2xl font-semibold tracking-tight md:text-3xl">
+                <h3 className="font-display text-xl font-semibold tracking-tight md:text-2xl">
                   {it.title}
                 </h3>
               </div>
@@ -613,25 +715,281 @@ function Bonuses() {
   );
 }
 
-/* ------------------------------- pull quote ------------------------------- */
+/* ---------------------------- why this works ---------------------------- */
 
-function PullQuote() {
+function WhyItWorks() {
+  const domains = ["Gym.", "Business.", "Career.", "Relationships.", "Money."];
   return (
-    <section className="relative overflow-hidden border-t border-border">
-      <img
-        src={chromeSculpture}
-        aria-hidden
-        alt=""
-        className="pointer-events-none absolute -right-24 top-10 w-96 rotate-12 opacity-70 animate-float-slow"
-      />
+    <section className="relative border-t border-border">
       <div className="mx-auto max-w-[1400px] px-6 py-28 md:py-40">
-        <p className="display-xl max-w-5xl text-[clamp(2.5rem,7vw,6.5rem)]">
-          Everything's a step ahead.
+        <div className="grid grid-cols-12 gap-6">
+          <div className="col-span-12 md:col-span-5">
+            <Eyebrow>06 — Why this works</Eyebrow>
+            <h2 className="mt-6 display-xl text-[clamp(2.25rem,5vw,4.5rem)]">
+              Techniques change.
+              <br />
+              <span className="text-accent">Architecture compounds.</span>
+            </h2>
+          </div>
+          <div className="col-span-12 space-y-6 text-lg text-foreground/80 md:col-span-6 md:col-start-7">
+            <p>
+              Most productivity courses teach techniques. Lvl 1 teaches architecture.
+              Once you understand how execution works, every new goal becomes easier.
+            </p>
+            <p className="font-display text-2xl text-foreground">
+              Everything becomes another questline.
+            </p>
+            <ul className="flex flex-wrap gap-3">
+              {domains.map((d) => (
+                <li
+                  key={d}
+                  className="rounded-full border border-border bg-background px-4 py-2 font-display text-lg"
+                >
+                  {d}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------ philosophy ------------------------------ */
+
+function Philosophy() {
+  return (
+    <section id="philosophy" className="relative overflow-hidden border-t border-border">
+      <MetalPiece
+        src={metal1}
+        className="absolute -right-24 top-10 w-96 opacity-70 rotate-12"
+      />
+      <div className="relative mx-auto max-w-[1400px] px-6 py-28 md:py-40">
+        <Eyebrow>07 — The Philosophy</Eyebrow>
+        <p className="display-xl mt-6 max-w-5xl text-[clamp(2.25rem,6vw,5.5rem)]">
+          Everyone starts at <span className="text-accent">Level 1.</span>
           <br />
-          Turn procrastination <FoilText variant="purple">boring.</FoilText>
-          <br />
-          I am <FoilText variant="gold">speed.</FoilText>
+          Not knowing isn't failure. It's simply your current level.
         </p>
+        <div className="mt-12 grid grid-cols-12 gap-6">
+          <div className="col-span-12 md:col-span-6 md:col-start-7 space-y-4 text-lg text-foreground/80">
+            <p>The entrepreneur making $10 million started here.</p>
+            <p>The athlete you admire started here.</p>
+            <p>The confident speaker started here.</p>
+            <p className="font-display text-2xl text-foreground">
+              Stop comparing your beginning to someone else's mastery. Level up instead.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------ who it's for ---------------------------- */
+
+function WhoFor() {
+  const forList = [
+    "Founders",
+    "Creators",
+    "Students",
+    "Knowledge workers",
+    "ADHD entrepreneurs",
+    "High-agency people",
+    "Anyone obsessed with improving",
+  ];
+  const notFor = [
+    "People looking for motivation",
+    "People wanting overnight success",
+    "People unwilling to execute",
+  ];
+  return (
+    <section id="results" className="relative border-t border-border bg-secondary/40">
+      <div className="mx-auto max-w-[1400px] px-6 py-28 md:py-40">
+        <Eyebrow>08 — Who this is for</Eyebrow>
+        <h2 className="mt-6 display-xl text-[clamp(2.25rem,5vw,4.5rem)]">
+          Built for <span className="text-accent">high-agency people.</span>
+        </h2>
+        <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div className="rounded-3xl border border-border bg-background p-8">
+            <div className="eyebrow">For</div>
+            <ul className="mt-6 space-y-3">
+              {forList.map((f) => (
+                <li key={f} className="flex items-center gap-3 font-display text-xl">
+                  <Check className="h-5 w-5 text-accent" strokeWidth={3} /> {f}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="rounded-3xl border border-border bg-background p-8">
+            <div className="eyebrow">Not for</div>
+            <ul className="mt-6 space-y-3">
+              {notFor.map((f) => (
+                <li
+                  key={f}
+                  className="flex items-center gap-3 font-display text-xl text-muted-foreground"
+                >
+                  <X className="h-5 w-5" strokeWidth={3} /> {f}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------ roadmap ------------------------------- */
+
+function Roadmap() {
+  const rows = [
+    ["Today", "Overwhelmed."],
+    ["Week One", "Clear."],
+    ["Week Two", "Executing daily."],
+    ["Month One", "Momentum."],
+    ["Three Months", "Compounding."],
+    ["One Year", "Your life looks unrecognizable."],
+  ];
+  return (
+    <section className="relative border-t border-border">
+      <div className="mx-auto max-w-[1400px] px-6 py-28 md:py-40">
+        <div className="grid grid-cols-12 gap-6">
+          <div className="col-span-12 md:col-span-5">
+            <Eyebrow>09 — The Roadmap</Eyebrow>
+            <h2 className="mt-6 display-xl text-[clamp(2.25rem,5vw,4.5rem)]">
+              From overwhelmed
+              <br />
+              to <span className="text-accent">unrecognizable.</span>
+            </h2>
+          </div>
+        </div>
+        <div className="mt-14 divide-y divide-border border-y border-border">
+          {rows.map(([when, state], i) => (
+            <div
+              key={when}
+              className="grid grid-cols-12 items-center gap-4 py-6"
+            >
+              <div className="col-span-2 font-mono text-xs uppercase tracking-widest text-muted-foreground md:col-span-1">
+                {(i + 1).toString().padStart(2, "0")}
+              </div>
+              <div className="col-span-10 md:col-span-4">
+                <div className="font-display text-2xl font-semibold md:text-3xl">{when}</div>
+              </div>
+              <div className="col-span-12 md:col-span-7">
+                <div className="font-display text-xl text-foreground/80 md:text-2xl">
+                  {state}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* --------------------------------- offer -------------------------------- */
+
+function Offer() {
+  const included = [
+    "Complete course",
+    "Templates",
+    "AI systems",
+    "Quest framework",
+    "Future updates",
+    "Bonus resources",
+    "Community waitlist",
+  ];
+  const upgrade = [
+    ["Level 1", "Course", "The Top 1% Productivity System."],
+    ["Level 2", "Execution Community", "Weekly accountability, live coaching, leaderboards."],
+    ["Level 3", "Done-With-You", "Personal execution system built with our team."],
+    ["Level 4", "Done-For-You", "We architect your life or business end-to-end."],
+  ];
+  return (
+    <section id="offer" className="relative overflow-hidden border-t border-border bg-foreground text-background">
+      <MetalPiece
+        src={metal2}
+        className="absolute -right-24 -top-16 w-96 opacity-50 rotate-12"
+      />
+      <MetalPiece
+        src={metal3}
+        className="absolute -left-16 bottom-0 w-64 opacity-50 -rotate-6"
+      />
+      <div className="relative mx-auto max-w-[1400px] px-6 py-28 md:py-40">
+        <div className="grid grid-cols-12 gap-6">
+          <div className="col-span-12 md:col-span-6">
+            <div className="eyebrow text-background/60">10 — The Offer</div>
+            <h2 className="mt-6 display-xl text-[clamp(2.5rem,6vw,5.5rem)]">
+              The Top 1%
+              <br />
+              <span className="text-accent">Productivity System.</span>
+            </h2>
+            <p className="mt-8 max-w-md text-lg text-background/70">
+              A complete operating system. Not another course you'll bookmark and forget.
+            </p>
+            <ul className="mt-10 space-y-2">
+              {included.map((i) => (
+                <li key={i} className="flex items-center gap-3 text-lg">
+                  <Check className="h-5 w-5 text-accent" strokeWidth={3} /> {i}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="col-span-12 md:col-span-5 md:col-start-8">
+            <div className="rounded-3xl border border-background/20 bg-background/5 p-8">
+              <div className="flex items-center gap-3">
+                <Mark className="h-10 w-10" />
+                <div>
+                  <div className="eyebrow text-background/60">Launch pricing</div>
+                  <div className="font-display text-xl font-bold">Founding cohort · 2026</div>
+                </div>
+              </div>
+              <div className="mt-8 flex items-end gap-4">
+                <span className="font-display text-6xl font-bold leading-none">$97</span>
+                <span className="pb-2 font-mono text-sm text-background/60 line-through">
+                  $197
+                </span>
+              </div>
+              <a
+                href="#waitlist"
+                className="group mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-background px-6 py-4 text-base font-medium text-foreground transition-transform hover:-translate-y-0.5"
+              >
+                Start Your Upgrade
+                <ArrowUpRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
+              <div className="mt-6 rounded-2xl border border-background/20 bg-background/5 p-5">
+                <div className="eyebrow text-background/60">14-Day Guarantee</div>
+                <p className="mt-2 text-sm text-background/80">
+                  Try it. Use it. Implement it. If you genuinely apply the framework and
+                  don't believe it helped you execute with more clarity, we'll refund you
+                  within 14 days. No interrogation. No guilt.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-20">
+          <div className="eyebrow text-background/60">Future upgrade path</div>
+          <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-4">
+            {upgrade.map(([lvl, name, desc]) => (
+              <div
+                key={lvl}
+                className="rounded-3xl border border-background/20 bg-background/5 p-6"
+              >
+                <div className="font-mono text-xs uppercase tracking-widest text-accent">
+                  {lvl}
+                </div>
+                <div className="mt-3 font-display text-2xl font-bold">{name}</div>
+                <p className="mt-2 text-sm text-background/70">{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -646,18 +1004,21 @@ function Waitlist() {
       id="waitlist"
       className="relative overflow-hidden border-t border-border bg-secondary/40"
     >
-      <div className="mx-auto grid max-w-[1400px] grid-cols-12 gap-6 px-6 py-28 md:py-40">
+      <MetalPiece
+        src={metal1}
+        className="absolute -left-24 top-10 w-80 opacity-70 -rotate-12"
+      />
+      <div className="relative mx-auto grid max-w-[1400px] grid-cols-12 gap-6 px-6 py-28 md:py-40">
         <div className="col-span-12 md:col-span-6">
-          <div id="manifesto"><Eyebrow>06 — Manifesto</Eyebrow></div>
+          <Eyebrow>11 — Final Call</Eyebrow>
           <h2 className="mt-6 display-xl text-[clamp(2.5rem,6vw,5.5rem)]">
-            Join the generation that believes
+            Stop collecting productivity advice.
             <br />
-            <FoilText variant="purple">nothing is impossible.</FoilText>
+            Start <span className="text-accent">collecting completed quests.</span>
           </h2>
           <p className="mt-8 max-w-md text-lg text-foreground/80">
-            You're not buying another productivity system. You're joining a movement of
-            people who decided that every goal is a quest — and Level&nbsp;1 is a proud
-            place to start.
+            Everything you've achieved started at Level 1. Everything you're dreaming
+            about still does. Become the fastest version of yourself.
           </p>
         </div>
 
@@ -672,8 +1033,10 @@ function Waitlist() {
             <div className="flex items-center gap-3">
               <Mark className="h-10 w-10" />
               <div>
-                <div className="eyebrow">Founding waitlist</div>
-                <div className="font-display text-xl font-bold">Claim your Level 1</div>
+                <div className="eyebrow">Join Now</div>
+                <div className="font-display text-xl font-bold">
+                  The Top 1% Productivity System
+                </div>
               </div>
             </div>
             {submitted ? (
@@ -682,7 +1045,7 @@ function Waitlist() {
                   <Check className="h-3 w-3" /> Quest accepted
                 </div>
                 <p className="text-lg font-medium">
-                  You're in. Check your inbox — the first quest is on its way.
+                  You're in. Check your inbox — Level 1 is on its way.
                 </p>
               </div>
             ) : (
@@ -708,11 +1071,11 @@ function Waitlist() {
                   type="submit"
                   className="group mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-foreground px-6 py-4 text-base font-medium text-background transition-transform hover:-translate-y-0.5"
                 >
-                  Join the founding cohort
+                  Join The Top 1% Productivity System
                   <ArrowUpRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </button>
                 <p className="mt-4 flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
-                  <Plus className="h-3 w-3" /> Early pricing locked for founders
+                  <Plus className="h-3 w-3" /> Launch pricing locked for founders — $97
                 </p>
               </>
             )}
@@ -727,7 +1090,7 @@ function Waitlist() {
 
 function Footer() {
   return (
-    <footer className="border-t border-border">
+    <footer id="faq" className="border-t border-border">
       <div className="mx-auto flex max-w-[1400px] flex-col gap-8 px-6 py-14 md:flex-row md:items-end md:justify-between">
         <div>
           <img
@@ -740,8 +1103,7 @@ function Footer() {
             draggable={false}
           />
           <p className="mt-4 max-w-sm text-sm text-muted-foreground">
-            Not another productivity app. The beginning of a movement for people who
-            refuse to stay Level&nbsp;1.
+            The Top 1% Productivity System. Engineer execution. Level up faster.
           </p>
         </div>
         <div className="flex flex-col gap-2 text-sm text-muted-foreground md:items-end">
@@ -771,12 +1133,17 @@ function Landing() {
       <Header />
       <Hero />
       <Marquee />
-      <Philosophy />
+      <TrustStrip />
+      <Problem />
+      <OS />
       <System />
-      <Quests />
       <Course />
       <Bonuses />
-      <PullQuote />
+      <WhyItWorks />
+      <Philosophy />
+      <WhoFor />
+      <Roadmap />
+      <Offer />
       <Waitlist />
       <Footer />
     </div>
