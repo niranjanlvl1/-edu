@@ -11,8 +11,11 @@ import {
   Plus,
 } from "lucide-react";
 
-import lvlMark from "@/assets/lvl1-mark.png";
-import chromeSculpture from "@/assets/chrome-sculpture.png";
+import lvlLogo from "@/assets/lvl1-logo.png.asset.json";
+import lvlArc from "@/assets/lvl1-arc.png";
+
+const lvlMark = lvlArc;
+const chromeSculpture = lvlArc;
 
 export const Route = createFileRoute("/")({
   component: Landing,
@@ -73,11 +76,15 @@ function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-6">
-        <a href="#top" className="flex items-center gap-2">
-          <Mark className="h-7 w-7" />
-          <span className="font-display text-lg font-bold tracking-tight">
-            LVL <span className="foil-text-purple">1</span>
-          </span>
+        <a href="#top" className="flex items-center">
+          <img
+            src={lvlLogo.url}
+            alt="LVL 1"
+            width={120}
+            height={72}
+            className="h-11 w-auto select-none"
+            draggable={false}
+          />
         </a>
         <nav className="hidden items-center gap-8 md:flex">
           {[
@@ -723,12 +730,15 @@ function Footer() {
     <footer className="border-t border-border">
       <div className="mx-auto flex max-w-[1400px] flex-col gap-8 px-6 py-14 md:flex-row md:items-end md:justify-between">
         <div>
-          <div className="flex items-center gap-3">
-            <Mark className="h-10 w-10" />
-            <span className="font-display text-2xl font-bold tracking-tight">
-              LVL <span className="foil-text-purple">1</span>
-            </span>
-          </div>
+          <img
+            src={lvlLogo.url}
+            alt="LVL 1"
+            width={180}
+            height={108}
+            loading="lazy"
+            className="h-16 w-auto select-none"
+            draggable={false}
+          />
           <p className="mt-4 max-w-sm text-sm text-muted-foreground">
             Not another productivity app. The beginning of a movement for people who
             refuse to stay Level&nbsp;1.
