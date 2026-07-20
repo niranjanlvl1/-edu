@@ -100,7 +100,7 @@ function Header() {
         </nav>
         <a
           href="#offer"
-          className="group inline-flex items-center gap-2 rounded-full bg-foreground px-4 py-2 text-sm font-medium text-background transition-transform hover:-translate-y-0.5"
+          className="group inline-flex items-center gap-2 rounded-full bg-foreground px-4 py-2 text-sm font-medium font-cta text-background transition-transform hover:-translate-y-0.5"
         >
           Join Now
           <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -175,14 +175,14 @@ function Hero() {
             <div className="flex flex-wrap items-center gap-4">
               <a
                 href="#offer"
-                className="group inline-flex items-center gap-3 rounded-full bg-foreground px-7 py-4 text-base font-medium text-background transition-transform hover:-translate-y-0.5"
+                className="group inline-flex items-center gap-3 rounded-full bg-foreground px-7 py-4 text-base font-medium font-cta text-background transition-transform hover:-translate-y-0.5"
               >
                 Start Your Upgrade
                 <ArrowUpRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </a>
               <a
                 href="#system"
-                className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-4 text-base font-medium text-foreground transition-colors hover:bg-secondary"
+                className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-4 text-base font-medium font-cta text-foreground transition-colors hover:bg-secondary"
               >
                 See The System
               </a>
@@ -1069,7 +1069,7 @@ function Waitlist() {
                 </label>
                 <button
                   type="submit"
-                  className="group mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-foreground px-6 py-4 text-base font-medium text-background transition-transform hover:-translate-y-0.5"
+                  className="group mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-foreground px-6 py-4 text-base font-medium font-cta text-background transition-transform hover:-translate-y-0.5"
                 >
                   Join The Top 1% Productivity System
                   <ArrowUpRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
