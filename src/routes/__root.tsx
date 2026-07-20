@@ -77,21 +77,25 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "LVL 1 — The Top 1% Productivity Course" },
+      { title: "LVL 1 - Top 1% Productivity Course" },
       {
         name: "description",
         content:
-          "Everyone starts at Level 1. The difference is how fast you level up. Turn overwhelming goals into quest lines and execute faster.",
+          "Everyone starts at Level 1. The difference is in the speed you level up. Turn your goals into quest lines & execute faster.",
       },
       { name: "author", content: "LVL 1" },
-      { property: "og:title", content: "LVL 1 — Level up faster." },
+      { property: "og:title", content: "LVL 1 - Top 1% Productivity Course" },
       {
         property: "og:description",
         content:
-          "Not another productivity app. A movement for people who refuse to stay Level 1.",
+          "Everyone starts at Level 1. The difference is in the speed you level up. Turn your goals into quest lines & execute faster.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "LVL 1 - Top 1% Productivity Course" },
+      { name: "twitter:description", content: "Everyone starts at Level 1. The difference is in the speed you level up. Turn your goals into quest lines & execute faster." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/46e5ebca-286a-4c0f-b486-af8fa12d0742/id-preview-9ac75b02--b3148f39-250e-453f-955c-eca67890d7b0.lovable.app-1784524097152.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/46e5ebca-286a-4c0f-b486-af8fa12d0742/id-preview-9ac75b02--b3148f39-250e-453f-955c-eca67890d7b0.lovable.app-1784524097152.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
