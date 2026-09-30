@@ -14,8 +14,7 @@ export const Route = createFileRoute("/api/subscribe")({
         );
       }
 
-      // Send to Systeme.io
-      const response = await fetch(
+      const systemResponse = await fetch(
         "https://api.systeme.io/api/v1/contacts",
         {
           method: "POST",
@@ -34,7 +33,9 @@ export const Route = createFileRoute("/api/subscribe")({
         }
       );
 
-      if (!response.ok) {
+      if (!systemResponse.ok) {
+        const errorText = await systemResponse.text();
+        console.error("Systeme.io error:", errorText);
         return new Response(
           JSON.stringify({
             error: "Failed to subscribe. Please try again.",
