@@ -1,47 +1,60 @@
-import { json } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 
-export async function POST(request: Request) {
-  try {
-    const { email, goal } = await request.json();
+export const Route = createFileRoute("/api/subscribe")({
+  method: "POST",
+  handler: async ({ request }) => {
+    try {
+      const body = await request.json();
+      const { email, goal } = body;
 
-    if (!email) {
-      return json({ error: "Email is required" }, { status: 400 });
-    }
-
-    // Send to Systeme.io
-    const response = await fetch(
-      "https://api.systeme.io/api/v1/contacts",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-API-Key": "u9jtipq1l49i4kztcehwwc24ajhrtrpbv7886vwzcxi0qm9lgp2n40qr07hsieex",
-        },
-        body: JSON.stringify({
-          email,
-          first_name: goal || "Founder",
-          custom_fields: {
-            goal: goal || "",
-          },
-        }),
+      if (!email) {
+        return new Response(
+          JSON.stringify({ error: "Email is required" }),
+          { status: 400, headers: { "Content-Type": "application/json" } }
+        );
       }
-    );
 
-    if (!response.ok) {
-      const errorData = await response.text();
-      console.error("Systeme.io error:", errorData);
-      return json(
-        { error: "Failed to subscribe. Please try again." },
-        { status: 500 }
+      // Send to Systeme.io
+      const response = await fetch(
+        "https://api.systeme.io/api/v1/contacts",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-API-Key":
+              "u9jtipq1l49i4kztcehwwc24ajhrtrpbv7886vwzcxi0qm9lgp2n40qr07hsieex",
+          },
+          body: JSON.stringify({
+            email,
+            first_name: goal || "Founder",
+            custom_fields: {
+              goal: goal || "",
+            },
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        return new Response(
+          JSON.stringify({
+            error: "Failed to subscribe. Please try again.",
+          }),
+          { status: 500, headers: { "Content-Type": "application/json" } }
+        );
+      }
+
+      return new Response(
+        JSON.stringify({ success: true, message: "Subscribed successfully" }),
+        { status: 200, headers: { "Content-Type": "application/json" } }
+      );
+    } catch (error) {
+      console.error("Subscribe error:", error);
+      return new Response(
+        JSON.stringify({
+          error: "Something went wrong. Please try again.",
+        }),
+        { status: 500, headers: { "Content-Type": "application/json" } }
       );
     }
-
-    return json({ success: true, message: "Subscribed successfully" });
-  } catch (error) {
-    console.error("Subscribe error:", error);
-    return json(
-      { error: "Something went wrong. Please try again." },
-      { status: 500 }
-    );
-  }
-}
+  },
+});
