@@ -1011,31 +1011,28 @@ function Waitlist() {
     const goal = formData.get("goal") as string;
 
     try {
-      // Send directly to Systeme.io with CORS headers workaround
-      const response = await fetch(
-        "https://api.systeme.io/api/v1/contacts",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-API-Key": "u9jtipq1l49i4kztcehwwc24ajhrtrpbv7886vwzcxi0qm9lgp2n40qr07hsieex",
-          },
-          body: JSON.stringify({
-            email: email,
-            first_name: goal || "Founder",
-            custom_fields: {
-              goal: goal || "",
-            },
-          }),
-          mode: "no-cors",
-        }
-      );
+      // Call our backend endpoint
+      const response = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          goal,
+        }),
+      });
 
-      // With no-cors, we can't check response, so assume success
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to submit");
+      }
+
       setSubmitted(true);
     } catch (err) {
-      // Even if it fails, show success (Systeme.io should receive it)
-      setSubmitted(true);
+      setError(err instanceof Error ? err.message : "Something went wrong");
+      setLoading(false);
     }
   };
 
@@ -1087,6 +1084,11 @@ function Waitlist() {
               </div>
             ) : (
               <>
+                {error && (
+                  <div className="mt-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+                    {error}
+                  </div>
+                )}
                 <label className="mt-8 block">
                   <span className="eyebrow">Email</span>
                   <input
