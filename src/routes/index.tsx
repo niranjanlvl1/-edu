@@ -1011,7 +1011,6 @@ function Waitlist() {
     const goal = formData.get("goal") as string;
 
     try {
-      // Send to your own server endpoint (we'll create this next)
       const response = await fetch("/api/subscribe", {
         method: "POST",
         headers: {
@@ -1129,7 +1128,6 @@ function Waitlist() {
     </section>
   );
 }
-
 /* ---------------------------------- footer --------------------------------- */
 
 function Footer() {
