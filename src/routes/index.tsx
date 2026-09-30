@@ -999,6 +999,49 @@ function Offer() {
 
 function Waitlist() {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get("email") as string;
+    const goal = formData.get("goal") as string;
+
+    try {
+      // Send to Systeme.io
+      const response = await fetch(
+        "https://api.systeme.io/api/v1/contacts",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-API-Key": "u9jtipq1l49i4kztcehwwc24ajhrtrpbv7886vwzcxi0qm9lgp2n40qr07hsieex",
+          },
+          body: JSON.stringify({
+            email: email,
+            first_name: goal || "Founder",
+            custom_fields: {
+              goal: goal,
+            },
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to submit. Please try again.");
+      }
+
+      setSubmitted(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong");
+      setLoading(false);
+    }
+  };
+
   return (
     <section
       id="waitlist"
@@ -1024,10 +1067,7 @@ function Waitlist() {
 
         <div className="col-span-12 md:col-span-5 md:col-start-8">
           <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              setSubmitted(true);
-            }}
+            onSubmit={handleSubmit}
             className="rounded-3xl border border-border bg-background p-8 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.4)]"
           >
             <div className="flex items-center gap-3">
@@ -1050,11 +1090,17 @@ function Waitlist() {
               </div>
             ) : (
               <>
+                {error && (
+                  <div className="mt-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+                    {error}
+                  </div>
+                )}
                 <label className="mt-8 block">
                   <span className="eyebrow">Email</span>
                   <input
                     required
                     type="email"
+                    name="email"
                     placeholder="you@ready.to"
                     className="mt-2 w-full rounded-xl border border-border bg-background px-4 py-4 text-base outline-none focus:border-foreground"
                   />
@@ -1063,16 +1109,20 @@ function Waitlist() {
                   <span className="eyebrow">One goal you're speed-running</span>
                   <input
                     type="text"
+                    name="goal"
                     placeholder="Ship my first product…"
                     className="mt-2 w-full rounded-xl border border-border bg-background px-4 py-4 text-base outline-none focus:border-foreground"
                   />
                 </label>
                 <button
                   type="submit"
-                  className="group mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-foreground px-6 py-4 text-base font-medium font-cta text-background transition-transform hover:-translate-y-0.5"
+                  disabled={loading}
+                  className="group mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-foreground px-6 py-4 text-base font-medium font-cta text-background transition-transform hover:-translate-y-0.5 disabled:opacity-50"
                 >
-                  Join The Top 1% Productivity System
-                  <ArrowUpRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  {loading ? "Joining..." : "Join The Top 1% Productivity System"}
+                  {!loading && (
+                    <ArrowUpRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  )}
                 </button>
                 <p className="mt-4 flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
                   <Plus className="h-3 w-3" /> Launch pricing locked for founders — $97
