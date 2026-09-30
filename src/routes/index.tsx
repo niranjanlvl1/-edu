@@ -996,7 +996,6 @@ function Offer() {
 }
 
 /* --------------------------------- waitlist -------------------------------- */
-
 function Waitlist() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -1012,27 +1011,22 @@ function Waitlist() {
     const goal = formData.get("goal") as string;
 
     try {
-      // Send to Systeme.io
-      const response = await fetch(
-        "https://api.systeme.io/api/v1/contacts",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-API-Key": "u9jtipq1l49i4kztcehwwc24ajhrtrpbv7886vwzcxi0qm9lgp2n40qr07hsieex",
-          },
-          body: JSON.stringify({
-            email: email,
-            first_name: goal || "Founder",
-            custom_fields: {
-              goal: goal,
-            },
-          }),
-        }
-      );
+      // Send to your own server endpoint (we'll create this next)
+      const response = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          goal,
+        }),
+      });
+
+      const data = await response.json();
 
       if (!response.ok) {
-        throw new Error("Failed to submit. Please try again.");
+        throw new Error(data.error || "Failed to submit");
       }
 
       setSubmitted(true);
